@@ -18,6 +18,8 @@ struct DoseCalculation: Identifiable {
     var timesPerDay: Int
     var hoursInterval: Int
     var timestamp: Date
+    var temperature: Double?
+    var tempUnit: String?
     
     // Funkcja do obliczania czasu następnej dawki
     func nextDoseTime() -> Date {
@@ -87,6 +89,8 @@ class CalculatorModel: ObservableObject {
     @Published var weight: String = ""
     @Published var selectedUnit: WeightUnit = .kg
     @Published var calculatedDose: String = ""
+    @Published var temperature: String = ""
+    @Published var temperatureUnit: String = "°C"
     @Published var history: [DoseCalculation] = []
     @Published var showSchedule: Bool = false
     @Published var currentCalculation: DoseCalculation?
@@ -133,7 +137,9 @@ class CalculatorModel: ObservableObject {
             calculatedDose: String(format: "%.2f ml", dose),
             timesPerDay: medication.timesPerDay,
             hoursInterval: medication.hoursInterval,
-            timestamp: Date()
+            timestamp: Date(),
+            temperature: Double(temperature),
+            tempUnit: "°C"
         )
         
         // Ustaw bieżące obliczenie
@@ -154,6 +160,8 @@ struct ContentView: View {
     @State private var newMedicationDose = ""
     @State private var newMedicationTimesPerDay = 3
     @State private var newMedicationHoursInterval = 8
+    @AppStorage("disclaimerAccepted") private var disclaimerAccepted = false
+    @State private var showDisclaimer = false
     
     var body: some View {
         NavigationView {
@@ -205,10 +213,18 @@ struct ContentView: View {
                         .pickerStyle(SegmentedPickerStyle())
                         .frame(width: 100)
                     }
+                    HStack {
+                        TextField("Temperatura (°C)", text: $model.temperature)
+                            .keyboardType(.decimalPad)
+                    }
                 }
                 
                 Section {
                     Button(action: {
+                        guard disclaimerAccepted else {
+                            showDisclaimer = true
+                            return
+                        }
                         model.calculateDose()
                         hideKeyboard()
                     }) {
@@ -221,7 +237,6 @@ struct ContentView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
-                
                 if !model.calculatedDose.isEmpty {
                     Section(header: Text("Zalecana dawka")) {
                         Text(model.calculatedDose)
@@ -236,6 +251,11 @@ struct ContentView: View {
                         
                         if let calculation = model.currentCalculation {
                             VStack(spacing: 10) {
+                                if let t = calculation.temperature {
+                                    Text(String(format: "Temperatura: %.1f °C", t))
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .foregroundColor(.secondary)
+                                }
                                 Text("Harmonogram dawkowania:")
                                     .font(.subheadline)
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -269,7 +289,11 @@ struct ContentView: View {
                                     Spacer()
                                     Text(calculation.calculatedDose)
                                 }
-                                
+                                if let t = calculation.temperature {
+                                    Text(String(format: "Temp: %.1f °C", t))
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
                                 Text("\(calculation.timesPerDay) x dziennie, co \(calculation.hoursInterval) godzin")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -291,12 +315,34 @@ struct ContentView: View {
             }
             .navigationTitle("Kalkulator dawek")
             .toolbar {
+                // ⬅️ PRZYCISK INFO (po lewej)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showDisclaimer = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .accessibilityLabel("Informacje i ostrzeżenie")
+                }
+
+                // ⬅️ PRZYCISK DODAWANIA LEKU (po prawej)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showingAddMedication = true
                     }) {
                         Image(systemName: "plus")
                     }
+                }
+            }
+            .onAppear {
+                // ⬅️ POKAŻ DISCLAIMER przy pierwszym uruchomieniu
+                if !disclaimerAccepted { showDisclaimer = true }
+            }
+            .sheet(isPresented: $showDisclaimer) {
+                // ⬅️ WIDOK OSTRZEŻENIA
+                DisclaimerView {
+                    disclaimerAccepted = true
+                    showDisclaimer = false
                 }
             }
             .sheet(isPresented: $showingAddMedication) {
@@ -418,5 +464,44 @@ struct MedicationSelectionView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+// MARK: - Disclaimer View
+struct DisclaimerView: View {
+    var onAccept: () -> Void
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Ważne ostrzeżenie")
+                        .font(.title2).bold()
+
+                    Text("""
+Ta aplikacja ma wyłącznie charakter informacyjny i **nie zastępuje** porady lekarza, farmaceuty ani informacji z ulotki/opisu leku. Wyniki są orientacyjne i oparte na danych podanych przez Ciebie – mogą być **nieodpowiednie** m.in. przy chorobach współistniejących, alergiach, wcześniactwie, u niemowląt, w interakcjach lek–lek itp.
+
+**Zawsze** weryfikuj dawkowanie z lekarzem lub zgodnie z receptą/ulotką. W razie wątpliwości skontaktuj się z lekarzem lub farmaceutą. W sytuacjach nagłych dzwoń 112/999.
+
+Korzystasz z aplikacji na własną odpowiedzialność.
+""")
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Przypomnienia:")
+                            .font(.headline)
+                        Text("• Nie łącz samodzielnie leków bez konsultacji.")
+                        Text("• Zwracaj uwagę na stężenia (mg/ml, mg/5 ml).")
+                        Text("• Nie przekraczaj dobowych dawek maksymalnych z ulotki/recepty.")
+                        Text("• Dla dzieci – kieruj się zaleceniami pediatry.")
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("Ostrzeżenie")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Rozumiem") { onAccept() }
+                }
+            }
+        }
     }
 }
