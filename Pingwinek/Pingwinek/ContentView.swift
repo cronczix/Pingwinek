@@ -18,6 +18,8 @@ struct DoseCalculation: Identifiable {
     var timesPerDay: Int
     var hoursInterval: Int
     var timestamp: Date
+    var temperature: Double?
+    var tempUnit: String?
     
     // Funkcja do obliczania czasu następnej dawki
     func nextDoseTime() -> Date {
@@ -87,6 +89,8 @@ class CalculatorModel: ObservableObject {
     @Published var weight: String = ""
     @Published var selectedUnit: WeightUnit = .kg
     @Published var calculatedDose: String = ""
+    @Published var temperature: String = ""
+    @Published var temperatureUnit: String = "°C"
     @Published var history: [DoseCalculation] = []
     @Published var showSchedule: Bool = false
     @Published var currentCalculation: DoseCalculation?
@@ -133,7 +137,9 @@ class CalculatorModel: ObservableObject {
             calculatedDose: String(format: "%.2f ml", dose),
             timesPerDay: medication.timesPerDay,
             hoursInterval: medication.hoursInterval,
-            timestamp: Date()
+            timestamp: Date(),
+            temperature: Double(temperature),
+            tempUnit: "°C"
         )
         
         // Ustaw bieżące obliczenie
@@ -205,6 +211,10 @@ struct ContentView: View {
                         .pickerStyle(SegmentedPickerStyle())
                         .frame(width: 100)
                     }
+                    HStack {
+                        TextField("Temperatura (°C)", text: $model.temperature)
+                            .keyboardType(.decimalPad)
+                    }
                 }
                 
                 Section {
@@ -236,6 +246,11 @@ struct ContentView: View {
                         
                         if let calculation = model.currentCalculation {
                             VStack(spacing: 10) {
+                                if let t = calculation.temperature {
+                                    Text(String(format: "Temperatura: %.1f °C", t))
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .foregroundColor(.secondary)
+                                }
                                 Text("Harmonogram dawkowania:")
                                     .font(.subheadline)
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -269,7 +284,11 @@ struct ContentView: View {
                                     Spacer()
                                     Text(calculation.calculatedDose)
                                 }
-                                
+                                if let t = calculation.temperature {
+                                    Text(String(format: "Temp: %.1f °C", t))
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
                                 Text("\(calculation.timesPerDay) x dziennie, co \(calculation.hoursInterval) godzin")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
