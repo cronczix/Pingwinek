@@ -45,10 +45,42 @@ struct DoseCalculation: Identifiable {
 
 class CalculatorModel: ObservableObject {
     @Published var medications: [Medication] = [
-        Medication(name: "Paracetamol 100mg/5ml", dosePerKg: 0.375, timesPerDay: 4, hoursInterval: 6),
-        Medication(name: "Paracetamol 200mg/5ml", dosePerKg: 0.375, timesPerDay: 4, hoursInterval: 6),
-        Medication(name: "Ibuprofen 200mg/5ml", dosePerKg: 10.0, timesPerDay: 3, hoursInterval: 8),
-        Medication(name: "Ibuprofen 100mg/5ml", dosePerKg: 10.0, timesPerDay: 3, hoursInterval: 8)
+        Medication(name: "APAP dla dzieci FORTE (200mg/5ml)",  dosePerKg: 0.375,  timesPerDay: 4, hoursInterval: 6),   // 15/40
+        Medication(name: "Calpol (120mg/5ml)",                  dosePerKg: 0.625,  timesPerDay: 4, hoursInterval: 6),   // 15/24
+        Medication(name: "Calpol 6 Plus (250mg/5ml)",           dosePerKg: 0.300,  timesPerDay: 4, hoursInterval: 6),   // 15/50
+        Medication(name: "Panadol dla dzieci (120mg/5ml)",      dosePerKg: 0.625,  timesPerDay: 4, hoursInterval: 6),   // 15/24
+        Medication(name: "Paracetamol Aflofarm (120mg/5ml)",    dosePerKg: 0.625,  timesPerDay: 4, hoursInterval: 6),   // 15/24
+        Medication(name: "Paracetamol Galena (120mg/5ml)",      dosePerKg: 0.625,  timesPerDay: 4, hoursInterval: 6),   // 15/24
+        Medication(name: "Paracetamol Hasco (120mg/5ml)",       dosePerKg: 0.625,  timesPerDay: 4, hoursInterval: 6),   // 15/24
+        Medication(name: "Paracetamol Hasco FORTE (240mg/5ml)", dosePerKg: 0.3125, timesPerDay: 4, hoursInterval: 6),   // 15/48
+        Medication(name: "Pedicetamol (100mg/ml)",              dosePerKg: 0.150,  timesPerDay: 4, hoursInterval: 6),   // 15/100
+        Medication(name: "Infacetamol (100mg/ml)",              dosePerKg: 0.150,  timesPerDay: 4, hoursInterval: 6),   // 15/100
+
+        // --- IBUPROFEN 100 mg/5 ml (20 mg/ml) → 10/20 = 0.50 ml/kg ---
+        Medication(name: "Babyfen (100mg/5ml)",                 dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Brufen (100mg/5ml)",                  dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Bufenik (100mg/5ml)",                 dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibum (100mg/5ml)",                    dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibufen dla dzieci (100mg/5ml)",       dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibunid dla dzieci (100mg/5ml)",       dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibuprom dla Dzieci (100mg/5ml)",      dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Kidofen (100mg/5ml)",                 dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "MIG dla dzieci (100mg/5ml)",          dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Milifen (100mg/5ml)",                 dosePerKg: 0.5,    timesPerDay: 3, hoursInterval: 8),
+
+        // --- IBUPROFEN 200 mg/5 ml (40 mg/ml) → 10/40 = 0.25 ml/kg ---
+        Medication(name: "Axoprofen Forte (200mg/5ml)",         dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Brufen Forte (200mg/5ml)",            dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Bufenik Forte (200mg/5ml)",           dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibum Forte (200mg/5ml)",              dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibum Forte Pure (200mg/5ml)",         dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibufen dla dzieci Forte (200mg/5ml)", dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibunid dla dzieci Forte (200mg/5ml)", dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibuprom dla Dzieci Forte (200mg/5ml)",dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Ibutact (200mg/5ml)",                 dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "MIG dla dzieci Forte (200mg/5ml)",    dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Nurofen dla dzieci Forte (200mg/5ml)",dosePerKg: 0.25,   timesPerDay: 3, hoursInterval: 8),
+        Medication(name: "Nurofen dla dzieci JUNIOR (200mg/5ml)",dosePerKg: 0.25,  timesPerDay: 3, hoursInterval: 8),
     ]
     
     @Published var selectedMedicationIndex: Int?
@@ -98,7 +130,7 @@ class CalculatorModel: ObservableObject {
             medicationName: medication.name,
             weight: weightValue,
             weightUnit: selectedUnit.rawValue,
-            calculatedDose: String(format: "%.2f mg", dose),
+            calculatedDose: String(format: "%.2f ml", dose),
             timesPerDay: medication.timesPerDay,
             hoursInterval: medication.hoursInterval,
             timestamp: Date()
@@ -282,7 +314,7 @@ struct ContentView: View {
                     HStack {
                         TextField("Dawka na kg", text: $newMedicationDose)
                             .keyboardType(.decimalPad)
-                        Text("mg/kg")
+                        Text("ml/kg")
                     }
                 }
                 
