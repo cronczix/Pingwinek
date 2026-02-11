@@ -1,89 +1,88 @@
-Privacy Policy
+Polityka prywatności
 
-Last updated: 11th Feb 2026
+Data ostatniej aktualizacji: 11 Luty 2026
 
-This Privacy Policy explains how we handle information in connection with the mobile application [APP NAME] (“the App”).
-
-⸻
-
-1. Information We Collect
-
-1.1 Personal Data
-
-The App does not collect, store, or process any personally identifiable information, such as:
-	•	name
-	•	email address
-	•	phone number
-	•	precise location
+Niniejsza Polityka prywatności opisuje zasady przetwarzania informacji w związku z korzystaniem z aplikacji mobilnej [NAZWA APLIKACJI] („Aplikacja”).
 
 ⸻
 
-1.2 Usage Data
+1. Zakres zbieranych danych
 
-The App does not track users across apps or websites and does not use third-party analytics or advertising SDKs.
+1.1 Dane osobowe
 
-⸻
-
-1.3 Device Data
-
-The App may temporarily access system-level information strictly required for functionality, such as:
-	•	device type
-	•	operating system version
-
-This data is not stored, not shared, and not used to identify users.
+Aplikacja nie zbiera, nie przechowuje ani nie przetwarza danych osobowych, takich jak:
+	•	imię i nazwisko
+	•	adres e-mail
+	•	numer telefonu
+	•	dokładna lokalizacja
 
 ⸻
 
-2. Data Storage
-	•	All data (if any) is stored locally on the user’s device
-	•	No data is transmitted to external servers
-	•	No cloud storage is used
+1.2 Dane dotyczące korzystania z aplikacji
+
+Aplikacja nie monitoruje aktywności użytkowników, nie korzysta z narzędzi analitycznych ani reklamowych oraz nie śledzi użytkowników pomiędzy aplikacjami lub stronami internetowymi.
 
 ⸻
 
-3. Third-Party Services
+1.3 Dane techniczne urządzenia
 
-The App does not integrate with third-party services that collect user data (such as analytics, ads, or tracking frameworks).
-
-⸻
-
-4. Tracking
-
-The App does not use tracking technologies and does not track users across apps or websites owned by other companies.
-
-As a result:
-	•	App Tracking Transparency (ATT) permission is not required
-	•	No advertising identifiers (IDFA) are accessed
+Aplikacja może tymczasowo uzyskać dostęp do podstawowych informacji technicznych urządzenia (np. typ urządzenia, wersja systemu operacyjnego) wyłącznie w celu prawidłowego działania.
+Dane te:
+	•	nie są zapisywane
+	•	nie są przesyłane na zewnętrzne serwery
+	•	nie umożliwiają identyfikacji użytkownika
 
 ⸻
 
-5. Children’s Privacy
-
-The App does not knowingly collect any data from children under the age of 13.
-
-⸻
-
-6. Data Security
-
-Because no personal data is collected or stored, there is no risk of data leakage from servers or third-party systems.
+2. Przechowywanie danych
+	•	Wszystkie dane (jeżeli występują) są przechowywane lokalnie na urządzeniu użytkownika
+	•	Aplikacja nie korzysta z serwerów zewnętrznych ani chmury
+	•	Dane nie są udostępniane osobom trzecim
 
 ⸻
 
-7. Your Rights
+3. Usługi podmiotów trzecich
 
-Since the App does not collect or store personal data, there is no personal data to access, modify, or delete.
-
-⸻
-
-8. Changes to This Policy
-
-This Privacy Policy may be updated from time to time. Any changes will be reflected on this page with an updated revision date.
+Aplikacja nie integruje się z usługami podmiotów trzecich, które zbierałyby dane użytkowników (np. analityka, reklamy, SDK śledzące).
 
 ⸻
 
-9. Contact
+4. Śledzenie użytkowników
 
-If you have any questions about this Privacy Policy, you can contact us at:
+Aplikacja:
+	•	nie stosuje technologii śledzących
+	•	nie korzysta z identyfikatora reklamowego (IDFA)
+	•	nie wymaga zgody App Tracking Transparency (ATT)
 
-Email: maciej.milik@gmail.com
-Developer: Maciej Milik
+⸻
+
+5. Prywatność dzieci
+
+Aplikacja nie zbiera danych od dzieci poniżej 13. roku życia.
+
+⸻
+
+6. Bezpieczeństwo danych
+
+Ponieważ Aplikacja nie przetwarza danych osobowych, ryzyko naruszenia bezpieczeństwa danych jest zminimalizowane.
+
+⸻
+
+7. Prawa użytkownika
+
+Ponieważ Aplikacja nie przechowuje danych osobowych, użytkownik nie ma danych do wglądu, modyfikacji ani usunięcia.
+
+⸻
+
+8. Zmiany w polityce prywatności
+
+Polityka prywatności może być okresowo aktualizowana. Aktualna wersja będzie zawsze dostępna w tym miejscu wraz z datą ostatniej aktualizacji.
+
+⸻
+
+9. Kontakt
+
+W przypadku pytań dotyczących niniejszej Polityki prywatności prosimy o kontakt:
+
+Adres e-mail: maciej.milik@gmail.com
+Twórca aplikacji: Maciej Milik
